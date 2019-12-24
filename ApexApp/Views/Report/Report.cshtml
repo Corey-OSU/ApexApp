@@ -1,0 +1,162 @@
+﻿@model IList<ApexApp.Models.Record>
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+
+        var startDay = new Date();
+        startDay.setMonth(startDay.getMonth() - 1, 1);
+        var endDay = new Date();
+        endDay.setMonth(endDay.getMonth(), 0);
+
+
+        $('#startDate').datepicker(
+            {
+                showTimePicker: false,
+                dateFormat: "mm/dd/yy",
+                changeMonth: true,
+                changeYear: true,
+                setDate: startDay,
+
+
+            });
+
+        $('#endDate').datepicker(
+            {
+                showTimePicker: false,
+                dateFormat: "mm/dd/yy",
+                changeMonth: true,
+                changeYear: true,
+                defaultDate: endDay
+
+            });
+        $('#endDate').datepicker('setDate', endDay);
+        $('#startDate').datepicker('setDate', startDay);
+
+
+
+    });
+
+</script>
+
+@using (Html.BeginForm("Report", "Report", FormMethod.Post))
+{
+    <div style="text-align: center; margin-top: 2em;">
+        <div class="row" style="display: inline-block">
+            <div class="column" style="padding-right: 3em; float: left;">
+                Start Date:
+                <div class="col-md-12" style="text-align: center">
+                    @Html.TextBox("startDate", "", new {id = "startDate", style = "text-align: center"})
+                </div>
+            </div>
+
+
+
+            <div class="column" style="padding-left: 3em; float: right;">
+                End Date:
+                <div class="col-md-12" style="text-align: center">
+                    @Html.TextBox("endDate", "", new {id = "endDate", style = "text-align: center"})
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 1em; margin-bottom: 2em; text-align: center" id="buttonDiv" >
+            <input type="submit" value="Pull Reports" name="reportSubmit" class="control-label"  display="inline-block", id="reportFilter"/>
+        </div>
+    </div>
+}
+
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-bordered" style="width: 100%; text-align: center; white-space: nowrap" id="AlternateTravelReport">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].soldAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].soldTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].acctNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].invoiceNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].customerPoNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].orderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].dueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].invoiceTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].productNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].orderQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].unitNet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].lineTotal)
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (int row = 0; row < 15; row++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model[row].soldAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].soldTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].acctNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].invoiceNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].customerPoNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].orderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].dueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].invoiceTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].productNum)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].orderQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].unitNet)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[row].lineTotal)
+                </td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+}
